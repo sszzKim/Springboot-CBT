@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
+    username: admin
+    password: admin1234!
+  jpa:
+    generate-ddl: true # Schema 초기화 여부, defalut가 true인 것 같다.
+    hibernate:
+      ddl-auto: update # create', 'create-drop', 'update', 'validate', 'none'
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        # 카멜표기법 안 쓰기 위해
