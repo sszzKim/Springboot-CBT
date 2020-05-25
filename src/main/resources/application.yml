@@ -5,7 +5,7 @@ spring:
     username: admin
     password: admin1234!
   jpa:
-    generate-ddl: true # Schema 초기화 여부, defalut가 true인 것 같다.
+    generate-ddl: false # Schema 초기화 여부, defalut가 true인 것 같다.
     hibernate:
       ddl-auto: update # create', 'create-drop', 'update', 'validate', 'none'
       naming:

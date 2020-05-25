@@ -3,12 +3,12 @@ package com.sszz.CBT.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "WRITTEN_TEST_TB")
+@Table(name = "TEST_WTEST_TB")
 public class WrittenTestVO {
 
     @Id
-    @GeneratedValue
-    Integer question_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer questionid;
 
     String subject;
     String hoecha;
@@ -36,8 +36,8 @@ public class WrittenTestVO {
         this.answer = answer;
     }
 
-    public WrittenTestVO(Integer question_id, String subject, String hoecha, String question, String data, String bogi1, String bogi2, String bogi3, String bogi4, String answer) {
-        this.question_id = question_id;
+    public WrittenTestVO(Integer questionid, String subject, String hoecha, String question, String data, String bogi1, String bogi2, String bogi3, String bogi4, String answer) {
+        this.questionid = questionid;
         this.subject = subject;
         this.hoecha = hoecha;
         this.question = question;
@@ -49,12 +49,12 @@ public class WrittenTestVO {
         this.answer = answer;
     }
 
-    public Integer getQuestion_id() {
-        return question_id;
+    public Integer getQuestionid() {
+        return questionid;
     }
 
-    public void setQuestion_id(Integer question_id) {
-        this.question_id = question_id;
+    public void setQuestionid(Integer questionid) {
+        this.questionid = questionid;
     }
 
     public String getSubject() {
@@ -127,22 +127,6 @@ public class WrittenTestVO {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    @Override
-    public String toString() {
-        return "WrittenTestVO{" +
-                "question_id=" + question_id +
-                ", subject='" + subject + '\'' +
-                ", hoecha='" + hoecha + '\'' +
-                ", question='" + question + '\'' +
-                ", data='" + data + '\'' +
-                ", bogi1='" + bogi1 + '\'' +
-                ", bogi2='" + bogi2 + '\'' +
-                ", bogi3='" + bogi3 + '\'' +
-                ", bogi4='" + bogi4 + '\'' +
-                ", answer='" + answer + '\'' +
-                '}';
     }
 
 }

@@ -15,9 +15,16 @@ public class CbtController {
     @Autowired
     CbtService cbtService;
 
-    @GetMapping("/greeting")
+
+    /*@GetMapping("/main")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
+        return "main";
+    }*/
+
+    //main
+    @GetMapping("/main")
+    public String greeting(Model model) {
         return "main";
     }
 
