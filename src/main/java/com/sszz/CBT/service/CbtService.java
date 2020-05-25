@@ -9,4 +9,7 @@ public interface CbtService {
     void delete(Integer questionId);
     WrittenTestVO getQuestion(Integer questionId);
     List<WrittenTestVO> getAllQuestion();
+
+    Boolean checkLogin(String email, String pwd);
+
 }
