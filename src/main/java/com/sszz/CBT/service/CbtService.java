@@ -1,5 +1,7 @@
 package com.sszz.CBT.service;
 
+import com.sszz.CBT.domain.HoechaVO;
+import com.sszz.CBT.domain.SubjectVO;
 import com.sszz.CBT.domain.WrittenTestVO;
 
 import java.util.List;
@@ -11,5 +13,11 @@ public interface CbtService {
     List<WrittenTestVO> getAllQuestion();
 
     Boolean checkLogin(String email, String pwd);
+
+    List<SubjectVO> getAllSubject();
+    List<HoechaVO> getAllHoecha();
+
+    List<WrittenTestVO> getSCondiQuestion(String s);
+    List<WrittenTestVO> getHCondiQuestion(String s);
 
 }

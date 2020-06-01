@@ -1,8 +1,12 @@
 package com.sszz.CBT.service;
 
+import com.sszz.CBT.domain.HoechaVO;
 import com.sszz.CBT.domain.LoginVO;
+import com.sszz.CBT.domain.SubjectVO;
 import com.sszz.CBT.domain.WrittenTestVO;
+import com.sszz.CBT.repository.HoechaRepository;
 import com.sszz.CBT.repository.LoginRepository;
+import com.sszz.CBT.repository.SubjectRepository;
 import com.sszz.CBT.repository.WrittenTestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,12 @@ public class CbtServiceImpl implements CbtService{
 
     @Autowired
     LoginRepository loginRepository;
+
+    @Autowired
+    SubjectRepository subjectRepository;
+
+    @Autowired
+    HoechaRepository hoechaRepository;
 
     public WrittenTestVO save(WrittenTestVO w) {
         return writtenTestRepository.save(w);
@@ -48,6 +58,18 @@ public class CbtServiceImpl implements CbtService{
              else return false;
 
     }
+
+    @Override
+    public List<SubjectVO> getAllSubject() { return subjectRepository.findAll(); }
+
+    @Override
+    public List<HoechaVO> getAllHoecha() { return hoechaRepository.findAll(); }
+
+    @Override
+    public List<WrittenTestVO> getSCondiQuestion(String s) { return writtenTestRepository.findBySubject(s); }
+
+    @Override
+    public List<WrittenTestVO> getHCondiQuestion(String s) { return writtenTestRepository.findByHoecha(s); }
 
 
 }

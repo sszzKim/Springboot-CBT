@@ -14,6 +14,11 @@
         <!-- Material Kit CSS -->
         <!-- <link href="assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />-->
         <link href="style/material-kit.css?v=2.0.7" rel="stylesheet" />
+
+        <script type="text/javascript">
+            var count = 0;
+        </script>
+
     </head>
 
     <body>
@@ -49,37 +54,45 @@
             </div>
         </div>
     </nav>
-    <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/bg3.jpg')">
+<!--    <div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/bg3.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="brand text-center">
-                        <h1>Your title here</h1>
-                        <h3 class="title text-center">Subtitle</h3>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="main main-raised">
         <div class="container">
             <div class="section text-center">
                 <h2 class="title">CBT PLAY</h2>
 
-                <tr th:each="message : ${messages}">
-                    o <td th:text="${message.question}">문제</td><br>
-                    <td th:text="${message.data}">문제</td><br>
-                    <input type="radio" name="chk_info" value="HTML"> 1. <td th:text="${message.bogi1}">보기1번</td><br>
-                    <input type="radio" name="chk_info" value="HTML"> 2. <td th:text="${message.bogi2}">보기2번</td><br>
-                    <input type="radio" name="chk_info" value="HTML"> 3. <td th:text="${message.bogi3}">보기3번</td><br>
-                    <input type="radio" name="chk_info" value="HTML"> 4. <td th:text="${message.bogi4}">보기4번</td><br>
-                    <hr>
-                </tr>
+                <form class="form" th:action="@{/login.do}" th:object="${loginVO}"  action="#" id="loginForm" method="get">
 
+                    <tr th:each="message : ${messages}">
+                        <h3><td th:text="${messageStat.count}">문제번호count</td>. <td th:text="${message.question}">문제</td></h3><br>
+                        <td th:text="${message.data}">문제추가데이터</td><br>
+                        <input type="radio" name="chk_info" value="HTML"> 1. <td th:text="${message.bogi1}">보기1번</td><br>
+                        <input type="radio" name="chk_info" value="HTML"> 2. <td th:text="${message.bogi2}">보기2번</td><br>
+                        <input type="radio" name="chk_info" value="HTML"> 3. <td th:text="${message.bogi3}">보기3번</td><br>
+                        <input type="radio" name="chk_info" value="HTML"> 4. <td th:text="${message.bogi4}">보기4번</td><br>
+                        <hr>
+                    </tr>
+
+                    <div class="col-sm-8 col-md-5 mx-auto">
+                        <a href="https://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-mk-demos" class="btn btn-rose btn-upgrade btn-lg" target="_blank">
+                            <i class="material-icons">unarchive</i> 채점하기
+                        </a>
+                    </div>
+
+                </form>
 
             </div>
         </div>
     </div>
+
     <footer class="footer footer-default">
         <div class="container">
             <nav class="float-left">

@@ -38,7 +38,7 @@ public class CbtController {
 
     //login 후
     @RequestMapping("/login.do")
-    public ModelAndView doLogin(@Valid LoginVO loginVO, BindingResult result,
+    public ModelAndView doLogin(@Valid LoginVO loginVO, Model model, BindingResult result,
                                 RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("---------------------> login!!!!!!!!!!!");
         System.out.println("---------------------> " + loginVO.getEmail());
@@ -46,21 +46,35 @@ public class CbtController {
         System.out.println("---------------------> login!!!!!!!!!!!");
 
         if(cbtService.checkLogin(loginVO.getEmail(),loginVO.getPwd())){
-            return new ModelAndView("main");
+            model.addAttribute("allSubject", cbtService.getAllSubject());
+            model.addAttribute("allHoecha", cbtService.getAllHoecha());
+
+            return new ModelAndView("cbtChoice");
         }
 
         return new ModelAndView("login");
     }
 
-
     //모든 문제 조회
     //@RequestMapping(value = "cbtPlay", method = RequestMethod.GET)
     @GetMapping("/cbtPlay")
-    public String hello(Model model){
+    public String cbtPlay(Model model, String condition){
         //List<WrittenTestVO> WrittenTests = cbtService.findAll();
         //model.addAttribute("model",WrittenTests);
 
-        model.addAttribute("messages", cbtService.getAllQuestion());
+        System.out.println("---------------------> cbtPlay!!!!!!!!!!!"+condition);
+        System.out.println("---------------------> cbtPlay!!!!!!!!!!!"+condition.charAt(0));
+
+        //조건에 맞게 찾아야G
+        if(condition.charAt(0) == 's' ){ //과목
+            System.out.println(cbtService.getSCondiQuestion(condition).toString());
+            model.addAttribute("messages",cbtService.getSCondiQuestion(condition));
+        }else if(condition.charAt(0) == 'h'){ //회차
+            System.out.println(cbtService.getHCondiQuestion(condition).toString());
+            model.addAttribute("messages",cbtService.getHCondiQuestion(condition));
+        }
+
+        //model.addAttribute("messages", cbtService.getAllQuestion());
         return "cbtPlay";
     }
 
