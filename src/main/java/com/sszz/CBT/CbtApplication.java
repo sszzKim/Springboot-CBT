@@ -20,6 +20,8 @@ public class CbtApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		//cbtService.saveHist();
+
 		/*cbtService.save(new WrittenTestVO(
 				"s1","hc1","다음은 운영체제의 5계층을 계층별로 설명한 내용이다. 하위계층에서 상위계층으로 바르게 나열된것은?",
 				"ㄱ. 동기화 및 프로세서 스케줄링 담당 ㄴ. 프로세스의 생성, 제거, 메시지전달, 시작과 정지 등의 작업 ㄷ. 메모리의 할당 및 회수 기능 담당 ㄹ. 주변장치의 상태파악과 입출력 장치의 스케줄링 ㅁ. 파일의 생성과 소멸, 파일의 열기/닫기, 파일의 유지 및 관리 담당",

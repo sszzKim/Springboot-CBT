@@ -1,16 +1,13 @@
 package com.sszz.CBT.service;
 
-import com.sszz.CBT.domain.HoechaVO;
-import com.sszz.CBT.domain.LoginVO;
-import com.sszz.CBT.domain.SubjectVO;
-import com.sszz.CBT.domain.WrittenTestVO;
-import com.sszz.CBT.repository.HoechaRepository;
-import com.sszz.CBT.repository.LoginRepository;
-import com.sszz.CBT.repository.SubjectRepository;
-import com.sszz.CBT.repository.WrittenTestRepository;
+import com.sszz.CBT.domain.*;
+import com.sszz.CBT.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.Jsr310Converters;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +25,15 @@ public class CbtServiceImpl implements CbtService{
 
     @Autowired
     HoechaRepository hoechaRepository;
+
+    @Autowired
+    CbtHistRepository cbtHistRepository;
+
+    @Autowired
+    QuesDabRepository quesDabRepository;
+
+    //Date today = new Date("2020-06-09");
+    //SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
 
     public WrittenTestVO save(WrittenTestVO w) {
         return writtenTestRepository.save(w);
@@ -71,5 +77,30 @@ public class CbtServiceImpl implements CbtService{
     @Override
     public List<WrittenTestVO> getHCondiQuestion(String s) { return writtenTestRepository.findByHoecha(s); }
 
+    @Override
+    public Boolean scoringSave(CbtHistVO cbtHistVO) {
+        cbtHistRepository.save(cbtHistVO);
+        return true;
+    }
+
+    //TEST
+    @Override
+    public void saveHist() {
+
+        String  day = "2016-11-22"; // 형식을 지켜야 함
+        java.sql.Date d = java.sql.Date.valueOf(day);
+
+        CbtHistVO frist = new CbtHistVO("suji20th@naver.com", d);
+
+        QuesDabVO quesDabVO1 = new QuesDabVO("1","5",frist);
+        QuesDabVO quesDabVO2 = new QuesDabVO("2","5",frist);
+        QuesDabVO quesDabVO3 = new QuesDabVO("3","5",frist);
+
+        cbtHistRepository.save(frist);
+        quesDabRepository.save(quesDabVO1);
+        quesDabRepository.save(quesDabVO2);
+        quesDabRepository.save(quesDabVO3);
+
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.sszz.CBT.service;
 
+import com.sszz.CBT.domain.CbtHistVO;
 import com.sszz.CBT.domain.HoechaVO;
 import com.sszz.CBT.domain.SubjectVO;
 import com.sszz.CBT.domain.WrittenTestVO;
@@ -19,5 +20,10 @@ public interface CbtService {
 
     List<WrittenTestVO> getSCondiQuestion(String s);
     List<WrittenTestVO> getHCondiQuestion(String s);
+
+    Boolean scoringSave(CbtHistVO cbtHistVO);
+
+    //TEST
+    public void saveHist();
 
 }
