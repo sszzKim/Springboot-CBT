@@ -1,5 +1,7 @@
 package com.sszz.CBT.domain;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,14 +13,14 @@ public class CbtHistVO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cbtHistId", nullable = false, unique = true)
+    //@Column(name = "cbtHistId", nullable = false, unique = true)
     private  Integer CbtHistId;
     private  String email;
     @Temporal(TemporalType.DATE)
     private Date createDate;
 
     //1:N으로 영속성 전이 설정 mappedBy = QuesDabVO에서 CbtHistVO 클래스 변수명
-    @OneToMany(mappedBy="cbtHistId", cascade={CascadeType.ALL})
+    @OneToMany(mappedBy="cbtHistId", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<QuesDabVO> quesDabVOs;
 
     public CbtHistVO() {
@@ -78,6 +80,16 @@ public class CbtHistVO {
     //배열에 답VO 넣는 메소드
     public void addQuesDabVO(QuesDabVO quesDabVO){
         this.quesDabVOs.add(quesDabVO);
+    }
+
+    @Override
+    public String toString() {
+        return "CbtHistVO{" +
+                "CbtHistId=" + CbtHistId +
+                ", email='" + email + '\'' +
+                ", createDate=" + createDate +
+                ", quesDabVOs=" + quesDabVOs +
+                '}';
     }
 
 }

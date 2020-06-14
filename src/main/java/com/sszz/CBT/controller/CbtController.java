@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 //스프링이 com.sszz.CBT 패키지 이하를 스캔해서 모든 파일을 메모리에 new하는 것은 아니구요.
@@ -63,6 +64,7 @@ public class CbtController {
     @GetMapping("/cbtPlay")
     public String cbtPlay( Model model, String condition ){
 
+
         System.out.println("---------------------> cbtPlay!!!!!!!!!!!"+condition);
         System.out.println("---------------------> cbtPlay!!!!!!!!!!!"+condition.charAt(0));
 
@@ -70,16 +72,19 @@ public class CbtController {
         if(condition.charAt(0) == 's' ){ //과목
             System.out.println(cbtService.getSCondiQuestion(condition).toString());
             model.addAttribute("messages",cbtService.getSCondiQuestion(condition));
+            model.addAttribute("condition",cbtService.getSCondiName(condition));
         }else if(condition.charAt(0) == 'h'){ //회차
             System.out.println(cbtService.getHCondiQuestion(condition).toString());
             model.addAttribute("messages",cbtService.getHCondiQuestion(condition));
+            model.addAttribute("condition",cbtService.getHCondiName(condition));
         }
 
-
+        //값을 담을 엔티티 셋팅
         CbtHistVO cbtHistVO = new CbtHistVO();
         model.addAttribute("cbtHistVO", cbtHistVO);
 
-        //List<QuesDabVO> quesDabVOs = ;
+        //이렇게 하면 안된다...ㅜ
+        //List<QuesDabVO> quesDabVOs = new ArrayList<>();
         //model.addAttribute("quesDabVOs", quesDabVOs);
 
         return "cbtPlay";
@@ -91,29 +96,37 @@ public class CbtController {
     public ModelAndView doScoring(@ModelAttribute ("cbtHistVO") @Valid CbtHistVO cbtHistVO, Model model, BindingResult result,
                                 RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+        // session 넣기 전 임시로 셋팅!
+        cbtHistVO.setEmail("suji20th@naver.com");
+        //문제 푼 날짜 셋팅
+        //cbtHistVO.setCreateDate(new java.text.SimpleDateFormat("yyyyMMdd").parse("20200614"));
+        cbtHistVO.setCreateDate(new Date());
 
-        //CbtHistVO cbtHistVO =   new CbtHistVO();
-        //cbtHistVO.setEmail("suji20th@naver.com");
-
-        cbtHistVO.setCreateDate(new java.text.SimpleDateFormat("yyyyMMdd").parse("20200609"));
-
+        //log용 count
         int count =0;
 
         System.out.println("이메일:" + cbtHistVO.getEmail());
         System.out.println("날짜 :" + cbtHistVO.getCreateDate());
+
         for( QuesDabVO quesDabVO :  cbtHistVO.getQuesDabVOs() ){
             System.out.println("count :" + ++count);
             System.out.println("quesDabVO.getQuesDabId() :" + quesDabVO.getQuesDabId());
             System.out.println("quesDabVO.getQuestionId() :" + quesDabVO.getQuestionId());
             System.out.println("quesDabVO.getDap() :" + quesDabVO.getDap());
             System.out.println("quesDabVO.getCbtHistId() :" + quesDabVO.getCbtHistId());
+            //관계설정!!
+            quesDabVO.setCbtHistId(cbtHistVO);
         }
 
-        //cbtService.scoringSave(cbtHistVO);
+        //cbtHistVO를 DB insert
+        //String nextQuestionId = Integer.toString(cbtService.getNextQuestionId());
+        cbtService.scoringSave(cbtHistVO);
+
+        //점수가져오기
+        model.addAttribute("score", cbtService.getScore(cbtHistVO));
+        model.addAttribute("cnt", cbtService.getQuestionCnt(cbtHistVO));
 
         return new ModelAndView("cbtResult");
-        //return "cbtResult";
     }
-
 
 }

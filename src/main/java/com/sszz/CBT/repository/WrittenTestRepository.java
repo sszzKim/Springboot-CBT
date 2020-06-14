@@ -9,5 +9,6 @@ public interface WrittenTestRepository extends JpaRepository<WrittenTestVO,Integ
 
     public List<WrittenTestVO> findBySubject(String subject);
     public List<WrittenTestVO> findByHoecha(String hoecha);
+    //public WrittenTestVO findByQuestionId(String hoecha);
 
 }

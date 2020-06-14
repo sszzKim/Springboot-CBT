@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.convert.Jsr310Converters;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -78,10 +81,54 @@ public class CbtServiceImpl implements CbtService{
     public List<WrittenTestVO> getHCondiQuestion(String s) { return writtenTestRepository.findByHoecha(s); }
 
     @Override
+    public String getSCondiName(String s) {
+        return subjectRepository.findById(s).get().getName();
+    }
+
+    @Override
+    public String getHCondiName(String s) {
+        return hoechaRepository.findById(s).get().getName();
+    }
+
+    @Override
     public Boolean scoringSave(CbtHistVO cbtHistVO) {
+        System.out.println("냐옹_____222_____"+cbtHistVO.toString());
         cbtHistRepository.save(cbtHistVO);
         return true;
     }
+
+    @Override
+    public String getScore(CbtHistVO cbtHistVO) {
+
+        int count = 0;
+
+        //cbtHistId에 맞는 note_quesdab_tb 가져오기 / 문제ID,답
+        Map<Integer, String> user = new HashMap<>();
+        List<QuesDabVO>  quesDabVOS = quesDabRepository.findByCbtHistId(cbtHistVO);
+        for(QuesDabVO quesDabVO :quesDabVOS){
+            user.put(Integer.parseInt(quesDabVO.getQuestionId()),quesDabVO.getDap());
+        }
+
+        //questionId에 맞는 답가져와서 비교하기
+        for(Integer questionId : user.keySet() ){
+            Optional<WrittenTestVO>  writtenTestVO = writtenTestRepository.findById(questionId);
+            if(writtenTestVO.get().getAnswer().equals(user.get(questionId))){ //답이 맞다면
+                count++;
+            }
+        }
+
+        return String.valueOf(count);
+    }
+
+    @Override
+    public Long getQuestionCnt(CbtHistVO cbtHistVO) {
+        return quesDabRepository.countByCbtHistId(cbtHistVO);
+    }
+
+    /*@Override
+    public Integer getNextQuestionId() {
+        return cbtHistRepository.findNextQuestionId();
+    }*/
 
     //TEST
     @Override
@@ -95,6 +142,8 @@ public class CbtServiceImpl implements CbtService{
         QuesDabVO quesDabVO1 = new QuesDabVO("1","5",frist);
         QuesDabVO quesDabVO2 = new QuesDabVO("2","5",frist);
         QuesDabVO quesDabVO3 = new QuesDabVO("3","5",frist);
+
+        System.out.println("냐옹__________"+frist.toString());
 
         cbtHistRepository.save(frist);
         quesDabRepository.save(quesDabVO1);

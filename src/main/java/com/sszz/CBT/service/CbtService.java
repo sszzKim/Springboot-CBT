@@ -21,7 +21,16 @@ public interface CbtService {
     List<WrittenTestVO> getSCondiQuestion(String s);
     List<WrittenTestVO> getHCondiQuestion(String s);
 
+    String getSCondiName(String s);
+    String getHCondiName(String s);
+
     Boolean scoringSave(CbtHistVO cbtHistVO);
+
+    String getScore(CbtHistVO cbtHistVO);
+
+    Long getQuestionCnt(CbtHistVO cbtHistVO);
+
+    //Integer getNextQuestionId();
 
     //TEST
     public void saveHist();

@@ -66,35 +66,30 @@
     </div>
     <div class="main main-raised">
         <div class="container">
-            <div class="section text-center">
-                <h2 class="title">CBT PLAY</h2>
+            <div class="section text-left">
+                <h1 class="title">선택한 문제 : <td th:text="${condition}"></h1> <br>
 
                 <form class="form" th:action="@{/scoring.do}" th:object="${cbtHistVO}"  action="#" id="" method="post">
 
-                    <input type="hidden" th:field="*{email}" th:attr="suji" />
+                    <!-- userEmail 이거 일단 안 돌아가ㅜ Session 설정 하기!! -->
+                    <input name="email" type="hidden" th:value="${userEmail}" />
 
                     <tr th:each="message, stat : ${messages}">
 
                         <h3><td th:text="${stat.count}">문제번호count</td>. <td th:text="${message.question}">문제</td></h3><br>
-                        <td th:text="${message.data}">문제추가데이터</td><br>
-                        <input type="radio" name="chk_info" value="HTML"> 1. <td th:text="${message.bogi1}">보기1번</td><br>
-                        <input type="radio" name="chk_info" value="HTML"> 2. <td th:text="${message.bogi2}">보기2번</td><br>
-                        <input type="radio" name="chk_info" value="HTML"> 3. <td th:text="${message.bogi3}">보기3번</td><br>
-                        <input type="radio" name="chk_info" value="HTML"> 4. <td th:text="${message.bogi4}">보기4번</td><br>
+                        <td th:text="${message.data}">문제추가데이터</td><br><br>
+                        <input type="radio" th:attr="name='quesDabVOs[' + ${stat.index} + '].dap'" value="1"> 1. <td th:text="${message.bogi1}">보기1번</td><br>
+                        <input type="radio" th:attr="name='quesDabVOs[' + ${stat.index} + '].dap'" value="2"> 2. <td th:text="${message.bogi2}">보기2번</td><br>
+                        <input type="radio" th:attr="name='quesDabVOs[' + ${stat.index} + '].dap'" value="3"> 3. <td th:text="${message.bogi3}">보기3번</td><br>
+                        <input type="radio" th:attr="name='quesDabVOs[' + ${stat.index} + '].dap'" value="4"> 4. <td th:text="${message.bogi4}">보기4번</td><br>
                         <hr>
 
-                        <input type="hidden" th:field="*{quesDabVOs[__${stat.index}__].questionId}" th:value="1" />
-                        <input type="hidden" th:field="*{quesDabVOs[__${stat.index}__].dap}" th:value="7" />
+                        <!-- 문제Key -->
+                        <input type="hidden" th:attr="name='quesDabVOs[' + ${stat.index} + '].questionId'" th:value="${message.questionid}" />
 
                     </tr>
 
-                    <!--<div class="col-sm-8 col-md-5 mx-auto">
-                        <a href="https://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-mk-demos" class="btn btn-rose btn-upgrade btn-lg" target="_blank">
-                            <i class="material-icons">unarchive</i> 채점하기
-                        </a>
-                    </div>-->
-
-                    <button class="col-sm-8 col-md-5 mx-auto" type="submit" >Get Started</button>
+                    <button class="btn btn-rose btn-upgrade btn-lg" type="submit" >채점하기</button>
 
                 </form>
 
@@ -108,7 +103,7 @@
                 <ul>
                     <li>
                         <a href="https://www.creative-tim.com/">
-                            Creative Tim
+                            Creative Kim
                         </a>
                     </li>
                 </ul>
@@ -118,7 +113,7 @@
                 <script>
               document.write(new Date().getFullYear())
             </script>, made with <i class="material-icons">favorite</i> by
-                <a href="https://www.creative-tim.com/" target="blank">Creative Tim</a> for a better web.
+                <a href="https://www.creative-tim.com/" target="blank">Creative Kim</a> for a better web.
             </div>
         </div>
     </footer>
