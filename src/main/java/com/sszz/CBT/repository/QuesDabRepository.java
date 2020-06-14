@@ -11,5 +11,6 @@ public interface QuesDabRepository extends JpaRepository<QuesDabVO,Integer> {
 
     public List<QuesDabVO> findByCbtHistId(CbtHistVO cbtHistVO);
     public Long countByCbtHistId(CbtHistVO cbtHistVO);
+    public QuesDabVO findByCbtHistIdAndQuestionId(CbtHistVO cbtHistVO, String questionId);
 
 }

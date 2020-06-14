@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CbtServiceImpl implements CbtService{
@@ -123,6 +120,55 @@ public class CbtServiceImpl implements CbtService{
     @Override
     public Long getQuestionCnt(CbtHistVO cbtHistVO) {
         return quesDabRepository.countByCbtHistId(cbtHistVO);
+    }
+
+    @Override
+    public List<CbtHistVO> getCbtHistList(String email) {
+        return cbtHistRepository.findByEmailOrderByCbtHistIdDesc(email);
+    }
+
+    @Override
+    public CbtHistVO getCbtHistVO(String cbtHistId) {
+        return cbtHistRepository.findById(Integer.parseInt(cbtHistId)).get();
+    }
+
+    @Override
+    public List<WrittenTestVO> getICQuestionList(CbtHistVO cbtHistVO) {
+
+        List<WrittenTestVO> list = new ArrayList<>();
+
+        //cbtHistId에 맞는 note_quesdab_tb 가져오기 / 문제ID,답
+        Map<Integer, String> user = new HashMap<>();
+        List<QuesDabVO>  quesDabVOS = quesDabRepository.findByCbtHistId(cbtHistVO);
+        for(QuesDabVO quesDabVO :quesDabVOS){
+            user.put(Integer.parseInt(quesDabVO.getQuestionId()),quesDabVO.getDap());
+        }
+
+        //questionId에 맞는 답가져와서 비교해서 틀린문제면 list 추가
+        for(Integer questionId : user.keySet() ){
+            Optional<WrittenTestVO>  writtenTestVO = writtenTestRepository.findById(questionId);
+            if(!(writtenTestVO.get().getAnswer().equals(user.get(questionId)))){ //답이 틀리다면
+                list.add(writtenTestVO.get());
+            }
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<QuesDabVO> getICUserDapList(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList) {
+
+        //문제 ID만 추출
+        List<String> questionIdList = new ArrayList<>();
+
+        //리턴할 QuesDabVO List
+        List<QuesDabVO> quesDabVOList = new ArrayList<>();
+
+        for(WrittenTestVO question :icQuestionList){
+            questionIdList.add(Integer.toString(question.getQuestionid()));
+            quesDabVOList.add(quesDabRepository.findByCbtHistIdAndQuestionId(cbtHistVO,Integer.toString(question.getQuestionid())));
+        }
+        return quesDabVOList;
     }
 
     /*@Override

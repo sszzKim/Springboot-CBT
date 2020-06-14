@@ -3,6 +3,7 @@ package com.sszz.CBT.controller;
 import com.sszz.CBT.domain.CbtHistVO;
 import com.sszz.CBT.domain.LoginVO;
 import com.sszz.CBT.domain.QuesDabVO;
+import com.sszz.CBT.domain.WrittenTestVO;
 import com.sszz.CBT.service.CbtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,13 +27,6 @@ public class CbtController {
 
     @Autowired
     CbtService cbtService;
-
-
-    /*@GetMapping("/main")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "main";
-    }*/
 
     //login
     @GetMapping("/login")
@@ -127,6 +121,31 @@ public class CbtController {
         model.addAttribute("cnt", cbtService.getQuestionCnt(cbtHistVO));
 
         return new ModelAndView("cbtResult");
+    }
+
+    @GetMapping("/ICNote.do")
+    public ModelAndView accessICNote( Model model ){
+        //list가져오기
+        //임시로 하드코딩
+        String email = "suji20th@naver.com";
+        model.addAttribute("ICNoteList", cbtService.getCbtHistList(email));
+        return new ModelAndView("IncorrectNoteMain");
+    }
+
+    @GetMapping("/ICNoteDetail")
+    public ModelAndView accessICNoteDetail( Model model, String cbtHistId ){
+
+        //cbt
+        CbtHistVO cbtHistVO =  cbtService.getCbtHistVO(cbtHistId);
+        List<WrittenTestVO> WTVL =  cbtService.getICQuestionList(cbtHistVO);
+
+        //틀린 문제만 뿌리고 / 정답 뿌리고
+        model.addAttribute("ICQuestionList",WTVL);
+
+        //내가 체크한 답 뿌리고
+        model.addAttribute("quesDabList",cbtService.getICUserDapList(cbtHistVO,WTVL));
+
+        return new ModelAndView("IncorrectNoteDetail");
     }
 
 }

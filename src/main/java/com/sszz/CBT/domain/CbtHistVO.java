@@ -14,7 +14,7 @@ public class CbtHistVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //@Column(name = "cbtHistId", nullable = false, unique = true)
-    private  Integer CbtHistId;
+    private  Integer cbtHistId;
     private  String email;
     @Temporal(TemporalType.DATE)
     private Date createDate;
@@ -38,18 +38,18 @@ public class CbtHistVO {
     }
 
     public CbtHistVO(Integer cbtHistId, String email, Date createDate, List<QuesDabVO> quesDabVOs) {
-        CbtHistId = cbtHistId;
+        cbtHistId = cbtHistId;
         this.email = email;
         this.createDate = createDate;
         this.quesDabVOs = quesDabVOs;
     }
 
     public Integer getCbtHistId() {
-        return CbtHistId;
+        return cbtHistId;
     }
 
     public void setCbtHistId(Integer cbtHistId) {
-        CbtHistId = cbtHistId;
+        cbtHistId = cbtHistId;
     }
 
     public String getEmail() {
@@ -85,7 +85,7 @@ public class CbtHistVO {
     @Override
     public String toString() {
         return "CbtHistVO{" +
-                "CbtHistId=" + CbtHistId +
+                "CbtHistId=" + cbtHistId +
                 ", email='" + email + '\'' +
                 ", createDate=" + createDate +
                 ", quesDabVOs=" + quesDabVOs +

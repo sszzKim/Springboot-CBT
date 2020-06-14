@@ -15,11 +15,9 @@
     <!-- <link href="assets/css/material-kit.css?v=2.0.7" rel="stylesheet" />-->
     <link href="style/material-kit.css?v=2.0.7" rel="stylesheet" />
 
-    <style type="text/css">
-    </style>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
+    <script type="text/javascript">
+            var count = 0;
+        </script>
 
 </head>
 
@@ -56,13 +54,11 @@
         </div>
     </div>
 </nav>
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('assets/img/bg3.jpg')">
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('img/whitebg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-md-8 ml-auto mr-auto">
                 <div class="brand text-center">
-                    <!--<h1>Your title here</h1>
-                    <h3 class="title text-center">Subtitle</h3>-->
                 </div>
             </div>
         </div>
@@ -70,43 +66,28 @@
 </div>
 <div class="main main-raised">
     <div class="container">
-        <div class="section text-center">
+        <div class="section text-left">
+            <h1 class="title">오답노트 <td th:text="${quesDabList[0].cbtHistId.cbtHistId}"></td></h1><br>
 
+            <tr th:each="icQuestion, stat : ${ICQuestionList}">
 
-                <ul class="navbar-nav ml-auto">
-                    <li class="dropdown nav-item">
-                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                            <i class="material-icons">apps</i> 회차/과목
-                        </a>
-                        <div class="dropdown-menu dropdown-with-icons">
-                            <a href="./index.html" class="dropdown-item">
-                                <i class="material-icons">layers</i> 회차
-                            </a>
-                            <a href="https://demos.creative-tim.com/material-kit/docs/2.0/getting-started/introduction.html" class="dropdown-item">
-                                <i class="material-icons">content_paste</i> 과목
-                            </a>
-                        </div>
-                    </li>
-                </ul>
+                <h3><td th:text="${stat.count}">문제번호count</td>. <td th:text="${icQuestion.question}">문제</td></h3><br>
+                <td th:text="${icQuestion.data}">문제추가데이터</td><br><br>
+                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '1' ? 'true' : 'false'" value="1"> 1. <td th:text="${icQuestion.bogi1}">보기1번</td><br>
+                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '2' ? 'true' : 'false'" value="2"> 2. <td th:text="${icQuestion.bogi2}">보기2번</td><br>
+                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '3' ? 'true' : 'false'" value="3"> 3. <td th:text="${icQuestion.bogi3}">보기3번</td><br>
+                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '4' ? 'true' : 'false'" value="4"> 4. <td th:text="${icQuestion.bogi4}">보기4번</td><br>
+                <br>
+                <h4>정답     : <td th:text="${icQuestion.answer}">문제정답</td></h4>
 
-            <div id="list">
-                <h2>회차</h2>
-                <tr th:each="hoecha : ${allHoecha}">
-                    <a th:href="@{/cbtPlay(condition=${hoecha.hoechaId})}"><td th:text="${hoecha.name}">회차</td> (<td th:text="${hoecha.doDate}">시행날짜</td>)</a><br><br>
-                </tr>
-            </div>
+                <hr>
 
-            <div class="">
-                <h2>과목</h2>
-                <tr th:each="subject : ${allSubject}">
-                    <a th:href="@{/cbtPlay(condition=${subject.subjectId})}"><td th:text="${subject.name}">과목1</td></a><br><br>
-                </tr>
-            </div>
-
+            </tr>
 
         </div>
     </div>
 </div>
+
 <footer class="footer footer-default">
     <div class="container">
         <nav class="float-left">
@@ -127,24 +108,6 @@
         </div>
     </div>
 </footer>
-<!--   Core JS Files   -->
-<script src="js/core/jquery.min.js" type="text/javascript"></script>
-<script src="js/core/popper.min.js" type="text/javascript"></script>
-<script src="js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="js/plugins/moment.min.js"></script>
-<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-<script src="js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
-<!--  Plugin for the coreSliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="js/plugins/nouislider.min.js" type="text/javascript"></script>
-<!--  Google Maps Plugin    -->
-<!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 </body>
-
-
-<script type="text/javascript">
-
-
-</script>
 
 </html>

@@ -1,9 +1,6 @@
 package com.sszz.CBT.service;
 
-import com.sszz.CBT.domain.CbtHistVO;
-import com.sszz.CBT.domain.HoechaVO;
-import com.sszz.CBT.domain.SubjectVO;
-import com.sszz.CBT.domain.WrittenTestVO;
+import com.sszz.CBT.domain.*;
 
 import java.util.List;
 
@@ -29,6 +26,14 @@ public interface CbtService {
     String getScore(CbtHistVO cbtHistVO);
 
     Long getQuestionCnt(CbtHistVO cbtHistVO);
+
+    List<CbtHistVO> getCbtHistList(String email);
+
+    CbtHistVO getCbtHistVO(String cbtHistId);
+
+    List<WrittenTestVO> getICQuestionList(CbtHistVO cbtHistVO);
+
+    List<QuesDabVO> getICUserDapList(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList);
 
     //Integer getNextQuestionId();
 
