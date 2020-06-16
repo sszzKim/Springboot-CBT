@@ -78,7 +78,14 @@
                 <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '3' ? 'true' : 'false'" value="3"> 3. <td th:text="${icQuestion.bogi3}">보기3번</td><br>
                 <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '4' ? 'true' : 'false'" value="4"> 4. <td th:text="${icQuestion.bogi4}">보기4번</td><br>
                 <br>
-                <h4>정답     : <td th:text="${icQuestion.answer}">문제정답</td></h4>
+                <h4>정답     : <td th:text="${icQuestion.answer}">정답</td></h4>
+
+                <form class="form" th:action="@{/saveComment.do}" th:object="${CommentVO}" action="#" id="" method="post">
+
+                    <input name="quesDabId" type="hidden" th:value="${quesDabList[stat.index].quesDabId}" />
+                    <textarea class="form-control1" rows="3" name="comment"></textarea> <button class="btn btn-rose btn-upgrade btn-lg" type="submit" >저장</button>
+
+                </form>
 
                 <hr>
 

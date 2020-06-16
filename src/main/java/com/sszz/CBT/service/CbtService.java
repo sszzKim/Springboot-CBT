@@ -35,6 +35,10 @@ public interface CbtService {
 
     List<QuesDabVO> getICUserDapList(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList);
 
+    Boolean commentSave(CommentVO commentVO);
+
+    //List<QuesDabVO> getQuesDabVOForComment(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList);
+
     //Integer getNextQuestionId();
 
     //TEST

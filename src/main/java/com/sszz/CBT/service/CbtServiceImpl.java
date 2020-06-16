@@ -32,6 +32,9 @@ public class CbtServiceImpl implements CbtService{
     @Autowired
     QuesDabRepository quesDabRepository;
 
+    @Autowired
+    CommentRepository commentRepository;
+
     //Date today = new Date("2020-06-09");
     //SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
 
@@ -170,6 +173,30 @@ public class CbtServiceImpl implements CbtService{
         }
         return quesDabVOList;
     }
+
+    @Override
+    public Boolean commentSave(CommentVO commentVO) {
+        commentRepository.save(commentVO);
+        return true;
+    }
+
+    /*@Override
+    public List<QuesDabVO> getQuesDabVOForComment(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList) {
+
+        List<QuesDabVO> list = new ArrayList<>();
+
+        List<QuesDabVO>  quesDabVOs = quesDabRepository.findByCbtHistId(cbtHistVO);
+
+        for(WrittenTestVO question :icQuestionList){
+            //문제 ID 추출 됨
+            for(QuesDabVO quesDabVO : quesDabVOs){
+                if(question.getQuestionid().equals(quesDabVO.getQuesDabId())){
+                    list.add(quesDabVO);
+                }
+            }
+        }
+        return list;
+    }*/
 
     /*@Override
     public Integer getNextQuestionId() {

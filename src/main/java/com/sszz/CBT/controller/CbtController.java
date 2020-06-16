@@ -1,9 +1,6 @@
 package com.sszz.CBT.controller;
 
-import com.sszz.CBT.domain.CbtHistVO;
-import com.sszz.CBT.domain.LoginVO;
-import com.sszz.CBT.domain.QuesDabVO;
-import com.sszz.CBT.domain.WrittenTestVO;
+import com.sszz.CBT.domain.*;
 import com.sszz.CBT.service.CbtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -139,13 +136,33 @@ public class CbtController {
         CbtHistVO cbtHistVO =  cbtService.getCbtHistVO(cbtHistId);
         List<WrittenTestVO> WTVL =  cbtService.getICQuestionList(cbtHistVO);
 
-        //틀린 문제만 뿌리고 / 정답 뿌리고
+        //틀린 문제만 뿌리고  +정답 뿌리고
         model.addAttribute("ICQuestionList",WTVL);
 
         //내가 체크한 답 뿌리고
         model.addAttribute("quesDabList",cbtService.getICUserDapList(cbtHistVO,WTVL));
+        //List<QuesDabVO> testQuesDabVOs = cbtService.getICUserDapList(cbtHistVO,WTVL);
+
+        //comment 긁어오기
+        //model.addAttribute("quesDabListFo",cbtService.getQuesDabVOForComment(cbtHistVO,WTVL));
+
+
+        //comment 등록할 때 쓸 객체 보내고
+        model.addAttribute("CommentVO",new CommentVO());
 
         return new ModelAndView("IncorrectNoteDetail");
+    }
+
+    @PostMapping("/saveComment.do")
+    public ModelAndView saveComment( Model model, CommentVO commentVO ) {
+
+        commentVO.setCreateData(new Date());
+        System.out.println(commentVO.toString());
+
+        //저장
+        cbtService.commentSave(commentVO);
+
+        return null;
     }
 
 }

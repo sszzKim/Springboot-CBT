@@ -1,6 +1,7 @@
 package com.sszz.CBT.domain;
 
-import org.hibernate.annotations.DynamicInsert;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -84,12 +85,7 @@ public class CbtHistVO {
 
     @Override
     public String toString() {
-        return "CbtHistVO{" +
-                "CbtHistId=" + cbtHistId +
-                ", email='" + email + '\'' +
-                ", createDate=" + createDate +
-                ", quesDabVOs=" + quesDabVOs +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
 }

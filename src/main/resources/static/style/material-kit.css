@@ -12728,6 +12728,19 @@ form {
   font-size: 14px;
 }
 
+.form-control1 {
+  background: no-repeat center bottom, center calc(100% - 1px);
+  background-size: 0 100%, 100% 100%;
+  border: 0.5;
+  height: 36px;
+  transition: background 0s ease-out;
+  padding-left: 0;
+  padding-right: 100px;
+  border-radius: 1;
+  font-size: 14px;
+  width : 70%;
+}
+
 .form-control:focus,
 .bmd-form-group.is-focused .form-control {
   background-size: 100% 100%, 100% 100%;
