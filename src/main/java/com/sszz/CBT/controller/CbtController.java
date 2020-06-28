@@ -132,20 +132,31 @@ public class CbtController {
     @GetMapping("/ICNoteDetail")
     public ModelAndView accessICNoteDetail( Model model, String cbtHistId ){
 
+        //지역변수
+        List<Integer> quesDapIdList = new ArrayList<>();
+
         //cbt
         CbtHistVO cbtHistVO =  cbtService.getCbtHistVO(cbtHistId);
         List<WrittenTestVO> WTVL =  cbtService.getICQuestionList(cbtHistVO);
+        List<QuesDabVO> quesDabList = cbtService.getICUserDapList(cbtHistVO,WTVL);
 
         //틀린 문제만 뿌리고  +정답 뿌리고
         model.addAttribute("ICQuestionList",WTVL);
 
         //내가 체크한 답 뿌리고
-        model.addAttribute("quesDabList",cbtService.getICUserDapList(cbtHistVO,WTVL));
+        model.addAttribute("quesDabList", quesDabList);
         //List<QuesDabVO> testQuesDabVOs = cbtService.getICUserDapList(cbtHistVO,WTVL);
 
-        //comment 긁어오기
-        //model.addAttribute("quesDabListFo",cbtService.getQuesDabVOForComment(cbtHistVO,WTVL));
+        //quesDapId 추출
+        for( QuesDabVO quesDabVO: quesDabList){
+            quesDapIdList.add(quesDabVO.getQuesDabId());
+        }
 
+        //comment 긁어오기 QuesDabVO F/K를 가지고 comment를 가져오쟈
+        ArrayList<ArrayList<CommentVO>> test = cbtService.getCommentByQuesDabVO(quesDabList);
+        model.addAttribute("commentVOList",test);
+
+        //model.addAttribute("quesDabListFo",cbtService.getQuesDabVOForComment(cbtHistVO,WTVL));
 
         //comment 등록할 때 쓸 객체 보내고
         model.addAttribute("CommentVO",new CommentVO());

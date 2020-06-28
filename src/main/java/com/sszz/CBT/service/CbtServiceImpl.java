@@ -180,23 +180,20 @@ public class CbtServiceImpl implements CbtService{
         return true;
     }
 
-    /*@Override
-    public List<QuesDabVO> getQuesDabVOForComment(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList) {
+    @Override
+    public ArrayList<ArrayList<CommentVO>> getCommentByQuesDabVO(List<QuesDabVO> quesDabList) {
 
-        List<QuesDabVO> list = new ArrayList<>();
+        ArrayList<ArrayList<CommentVO>> commentListList = new ArrayList<ArrayList<CommentVO>>();
 
-        List<QuesDabVO>  quesDabVOs = quesDabRepository.findByCbtHistId(cbtHistVO);
-
-        for(WrittenTestVO question :icQuestionList){
-            //문제 ID 추출 됨
-            for(QuesDabVO quesDabVO : quesDabVOs){
-                if(question.getQuestionid().equals(quesDabVO.getQuesDabId())){
-                    list.add(quesDabVO);
-                }
-            }
+        for(QuesDabVO quesDabVO :quesDabList){
+            commentListList.add(commentRepository.findByQuesDabId(quesDabVO));
         }
-        return list;
-    }*/
+
+        return commentListList;
+
+    }
+
+
 
     /*@Override
     public Integer getNextQuestionId() {

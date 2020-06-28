@@ -89,7 +89,14 @@
 
                 <hr>
 
-            </tr>
+                </tr>
+
+                <tr th:each="commentList, cllStat1 : ${commentVOList[stat.index]}">
+                    <tr th:each="commentVO, cllStat2 : ${commentList}">
+                        <td th:text="${commentVO.comment}">댓글</td>
+                        <td th:text="${commentVO.createData}">댓글생성날짜</td><br>
+                    </tr>
+                </tr>
 
         </div>
     </div>

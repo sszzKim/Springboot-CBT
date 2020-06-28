@@ -2,7 +2,9 @@ package com.sszz.CBT.service;
 
 import com.sszz.CBT.domain.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public interface CbtService {
     WrittenTestVO save(WrittenTestVO w);
@@ -37,7 +39,7 @@ public interface CbtService {
 
     Boolean commentSave(CommentVO commentVO);
 
-    //List<QuesDabVO> getQuesDabVOForComment(CbtHistVO cbtHistVO, List<WrittenTestVO> icQuestionList);
+    ArrayList<ArrayList<CommentVO>> getCommentByQuesDabVO(List<QuesDabVO> quesDabList);
 
     //Integer getNextQuestionId();
 
