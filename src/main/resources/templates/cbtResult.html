@@ -36,17 +36,17 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="javascript:;" class="nav-link">
+                        <a th:href="@{/main.do}" class="nav-link">
                             보안기사란
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:;" class="nav-link">
+                        <a th:href="@{/login.do?email=suji20th%40naver.com&pwd=pwd}" class="nav-link">
                             문제풀기
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:;" class="nav-link">
+                        <a th:href="@{/ICNote.do}" class="nav-link">
                             오답노트
                         </a>
                     </li>
@@ -72,7 +72,10 @@
 
                 <h1><td th:text="${score}"></td>/<td th:text="${cnt}"></td></h1><br>
 
-                <button class="btn btn-rose btn-upgrade btn-lg" type="submit" >틀린문제 보러가기</button>
+                <a th:href="@{/ICNoteDetail(cbtHistId=${cbtHistId})}">
+                    <button class="btn btn-rose btn-upgrade btn-lg" type="submit" >틀린문제 보러가기</button>
+                </a>
+
 
             </div>
         </div>

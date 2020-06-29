@@ -1,6 +1,5 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 
 <head>
     <title>Hello, world!</title>
@@ -36,17 +35,17 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link">
+                    <a th:href="@{/main.do}" class="nav-link">
                         보안기사란
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link">
+                    <a th:href="@{/login.do?email=suji20th%40naver.com&pwd=pwd}" class="nav-link">
                         문제풀기
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:;" class="nav-link">
+                    <a th:href="@{/ICNote.do}" class="nav-link">
                         오답노트
                     </a>
                 </li>
@@ -69,34 +68,66 @@
         <div class="section text-left">
             <h1 class="title">오답노트 <td th:text="${quesDabList[0].cbtHistId.cbtHistId}"></td></h1><br>
 
-            <tr th:each="icQuestion, stat : ${ICQuestionList}">
 
-                <h3><td th:text="${stat.count}">문제번호count</td>. <td th:text="${icQuestion.question}">문제</td></h3><br>
-                <td th:text="${icQuestion.data}">문제추가데이터</td><br><br>
-                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '1' ? 'true' : 'false'" value="1"> 1. <td th:text="${icQuestion.bogi1}">보기1번</td><br>
-                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '2' ? 'true' : 'false'" value="2"> 2. <td th:text="${icQuestion.bogi2}">보기2번</td><br>
-                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '3' ? 'true' : 'false'" value="3"> 3. <td th:text="${icQuestion.bogi3}">보기3번</td><br>
-                <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '4' ? 'true' : 'false'" value="4"> 4. <td th:text="${icQuestion.bogi4}">보기4번</td><br>
-                <br>
-                <h4>정답     : <td th:text="${icQuestion.answer}">정답</td></h4>
+                <tr th:each="icQuestion, stat : ${ICQuestionList}">
 
-                <form class="form" th:action="@{/saveComment.do}" th:object="${CommentVO}" action="#" id="" method="post">
+                    <h3><td th:text="${stat.count}">문제번호count</td>. <td th:text="${icQuestion.question}">문제</td></h3><br>
+                    <td th:text="${icQuestion.data}">문제추가데이터</td><br><br>
+                    <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '1' ? 'true' : 'false'" value="1"> 1. <td th:text="${icQuestion.bogi1}">보기1번</td><br>
+                    <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '2' ? 'true' : 'false'" value="2"> 2. <td th:text="${icQuestion.bogi2}">보기2번</td><br>
+                    <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '3' ? 'true' : 'false'" value="3"> 3. <td th:text="${icQuestion.bogi3}">보기3번</td><br>
+                    <input type="radio" th:checked = "${quesDabList[stat.index].dap} eq '4' ? 'true' : 'false'" value="4"> 4. <td th:text="${icQuestion.bogi4}">보기4번</td><br>
+                    <br>
+                    <h4>정답     : <td th:text="${icQuestion.answer}">정답</td></h4>
 
-                    <input name="quesDabId" type="hidden" th:value="${quesDabList[stat.index].quesDabId}" />
-                    <textarea class="form-control1" rows="3" name="comment"></textarea> <button class="btn btn-rose btn-upgrade btn-lg" type="submit" >저장</button>
+                    <form class="form" th:action="@{/saveComment.do}" th:object="${CommentVO}" action="#" id="" method="post">
+                        <input name="quesDabId" type="hidden" th:value="${quesDabList[stat.index].quesDabId}" />
+                        <textarea class="form-control1" rows="3" name="comment"></textarea> <button class="btn btn-rose btn-upgrade btn-lg" type="submit" >저장</button>
+                        <!-- redirect위해 cbtHistId값을 넘겨준다 -->
+                        <input type="hidden" th:attr="name='cbtHistId'" th:value="${quesDabList[0].cbtHistId.cbtHistId}" />
+                    </form>
 
-                </form>
+                    <hr>
 
-                <hr>
+                    <!-- 뎃글 가져오기 야매 -->
+                    <th:block th:if="${stat.index} == 0">
+                        <table class="table table-striped" th:each="commentVO: ${commentVOList0}">
+                            <tr>
+                                <td width="1000px" th:text="${commentVO.comment}">comment</td>
+                                <td th:text="${commentVO.createData}">createdata</td>
+                            </tr>
+                        </table>
+                    </th:block>
+
+                    <th:block th:if="${stat.index} == 1">
+                        <table class="table table-striped" th:each="commentVO: ${commentVOList1}">
+                            <tr>
+                                <td width="1000px" th:text="${commentVO.comment}">comment</td>
+                                <td th:text="${commentVO.createData}">createdata</td>
+                            </tr>
+                        </table>
+                    </th:block>
+
+                    <th:block th:if="${stat.index} == 2">
+                        <table class="table table-striped" th:each="commentVO: ${commentVOList2}">
+                            <tr>
+                                <td width="1000px" th:text="${commentVO.comment}">comment</td>
+                                <td th:text="${commentVO.createData}">createdata</td>
+                            </tr>
+                        </table>
+                    </th:block>
+
+                    <th:block th:if="${stat.index} == 3">
+                        <table class="table table-striped" th:each="commentVO: ${commentVOList3}">
+                            <tr>
+                                <td width="1000px" th:text="${commentVO.comment}">comment</td>
+                                <td th:text="${commentVO.createData}">createdata</td>
+                            </tr>
+                        </table>
+                    </th:block>
 
                 </tr>
 
-                <tr th:each="commentList, cllStat1 : ${commentVOList[stat.index]}">
-                    <tr th:each="commentVO, cllStat2 : ${commentList}">
-                        <td th:text="${commentVO.comment}">댓글</td>
-                        <td th:text="${commentVO.createData}">댓글생성날짜</td><br>
-                    </tr>
-                </tr>
 
         </div>
     </div>

@@ -116,6 +116,7 @@ public class CbtController {
         //점수가져오기
         model.addAttribute("score", cbtService.getScore(cbtHistVO));
         model.addAttribute("cnt", cbtService.getQuestionCnt(cbtHistVO));
+        model.addAttribute("cbtHistId", cbtHistVO.getCbtHistId());
 
         return new ModelAndView("cbtResult");
     }
@@ -153,10 +154,16 @@ public class CbtController {
         }
 
         //comment 긁어오기 QuesDabVO F/K를 가지고 comment를 가져오쟈
-        ArrayList<ArrayList<CommentVO>> test = cbtService.getCommentByQuesDabVO(quesDabList);
-        model.addAttribute("commentVOList",test);
+        ArrayList<ArrayList<CommentVO>> commentListList = cbtService.getCommentByQuesDabVO(quesDabList);
 
-        //model.addAttribute("quesDabListFo",cbtService.getQuesDabVOForComment(cbtHistVO,WTVL));
+        //--------------------------------------------------------------
+        // 뎃글 뿌림
+        int index = 0;
+        for(List<CommentVO> commentVOList: commentListList){
+            model.addAttribute("commentVOList"+index,commentVOList);
+            index++;
+        }
+        //--------------------------------------------------------------
 
         //comment 등록할 때 쓸 객체 보내고
         model.addAttribute("CommentVO",new CommentVO());
@@ -165,7 +172,7 @@ public class CbtController {
     }
 
     @PostMapping("/saveComment.do")
-    public ModelAndView saveComment( Model model, CommentVO commentVO ) {
+    public String saveComment( Model model, CommentVO commentVO, @RequestParam String cbtHistId ) {
 
         commentVO.setCreateData(new Date());
         System.out.println(commentVO.toString());
@@ -173,7 +180,12 @@ public class CbtController {
         //저장
         cbtService.commentSave(commentVO);
 
-        return null;
+        return "redirect:/ICNoteDetail?cbtHistId="+cbtHistId;
+    }
+
+    @GetMapping("/main.do")
+    public String main( Model model ){
+        return "main";
     }
 
 }
